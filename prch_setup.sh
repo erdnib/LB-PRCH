@@ -11,7 +11,7 @@ xset -s noblank
 off openbox-session &
 while true;
 do
-  /usr/bin/firefox -kiosk -private-window http://${pricecheckerip}:4322/access/PriceChecker.html
+  /usr/bin/firefox -kiosk -private-window -width=1280 -height=800 http://${pricecheckerip}:4322/access/PriceChecker.html
 done" | sudo tee /opt/kiosk/kiosk.sh
 
 # Write service file to /etc/systemd/system/kiosk.service
