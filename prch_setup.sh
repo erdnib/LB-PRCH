@@ -99,4 +99,6 @@ sudo systemctl daemon-reload
 sudo systemctl enable kiosk
 
 # Finish
+sudo systemctl stop kiosk
 sudo systemctl start kiosk
+
