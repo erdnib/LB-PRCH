@@ -1,4 +1,24 @@
 #!/bin/bash
+sudo mv /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.copy
+
+read -p "Enter pricechecker IP: " ip_address
+read -p "Enter gateway IP: " gateway
+
+echo "
+network:
+  ethernets:
+    enp4s0:
+      dhcp4: false
+      addresses:
+        - ${ip_address}
+      routes:
+        - to: 0.0.0.0/0
+          via: ${gateway}
+  version: 2 " | tee /etc/netplan/00-installer-config.yaml
+
+sudo netplan apply
+
+
 echo "Please select ACR server from the list:"
 echo "1) 65st"
 echo "2) E16st"
