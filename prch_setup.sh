@@ -13,8 +13,11 @@ network:
   ethernets:
     ${interface}:
       dhcp4: false
-      addresses: [ ${ip_address}/24]  
-      gateway4: ${gateway}
+      addresses: 
+        - ${ip_address}/24
+      routes:
+        - to: 0.0.0.0/0
+          via: ${gateway}
       nameservers:
         addresses: [8.8.8.8, 8.8.4.4] 
 EOF
