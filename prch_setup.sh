@@ -1,20 +1,20 @@
 #!/bin/bash
-sudo mv /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.copy
+sudo mv /etc/netplan/1-network-manager-all.yaml /etc/netplan/1-network-manager-all.yaml.copy
 
 read -p "Enter pricechecker IP: " ip_address
 read -p "Enter gateway IP: " gateway
 
 echo "
 network:
+  version: 2
+  renderer: NetworkManager
   ethernets:
-    enp4s0:
-      dhcp4: false
-      addresses:
-        - ${ip_address}
-      routes:
-        - to: 0.0.0.0/0
-          via: ${gateway}
-  version: 2 " | tee /etc/netplan/00-installer-config.yaml
+    enp2s0:
+      dhcp4: no
+      addresses: [${ip_address}/24]
+      gateway4: ${gateway}
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]" | tee /etc/netplan/1-network-manager-all.yaml
 
 sudo netplan apply
 
@@ -86,10 +86,6 @@ case $choice in
 esac
 echo "You selected: $pricecheckersrv"
 
-
-# Install X.org, OpenBox, Firefox
-sudo apt install --no-install-recommends -y xorg openbox firefox
-
 # Write X.org startup script to /opt/kiosk/kiosk.sh
 sudo mkdir /opt/kiosk
 echo "xset s off
@@ -117,8 +113,9 @@ sudo chmod +x /opt/kiosk/kiosk.sh
 # Enable the service on startup
 sudo systemctl daemon-reload
 sudo systemctl enable kiosk
-
+sudo systemctl set-default multi-user.target
 # Finish
 sudo systemctl stop kiosk
 sudo systemctl start kiosk
+sudo reboot
 
