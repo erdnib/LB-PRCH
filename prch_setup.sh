@@ -13,11 +13,10 @@ network:
   ethernets:
     ${interface}:
       dhcp4: false
-      addresses:
-        ${ip_address}
-      routes:
-          to: 0.0.0.0/0
-          via: ${gateway}
+      addresses: [ ${ip_address}/24]  
+      gateway4: ${gateway}
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4] 
 EOF
 # Apply new network configuration
 sudo netplan apply
