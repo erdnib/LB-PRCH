@@ -73,9 +73,8 @@ After=network-online.target
 Wants=network-online.target
 [Service]
 Type=simple
+ExecStartPre=/bin/sleep 30
 ExecStart=/usr/bin/startx /opt/kiosk/kiosk.sh
-User=ubuntu
-Environment=DISPLAY=:0
 [Install]
 WantedBy=multi-user.target
 EOF
