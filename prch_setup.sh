@@ -91,7 +91,7 @@ sudo mkdir /opt/kiosk
 echo "xset s off
 xset -dpms
 xset -s noblank
-off openbox-session &
+openbox-session &
 while true;
 do
   /usr/bin/firefox -kiosk -private-window -width=1280 -height=800 http://${pricecheckersrv}:4322/access/PriceChecker.html
@@ -102,6 +102,7 @@ echo "[Unit]
 Description=Start kiosk
 [Service]
 Type=simple
+ExecStartPre=/bin/sleep 30
 ExecStart=sudo startx /etc/X11/Xsession /opt/kiosk/kiosk.sh
 [Install]
 WantedBy=multi-user.target" | sudo tee /etc/systemd/system/kiosk.service
