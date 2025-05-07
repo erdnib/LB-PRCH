@@ -25,10 +25,10 @@ EOF
 sudo netplan apply
 # Select the ACR server from the list
 echo "Please select ACR server from the list:"
-PS3="Enter your choice [1-14]: "
+PS3="Enter your choice [1-15]: "
 select opt in \
     "65st" "E16st" "Philly 1" "18th ave" "Staten Island" "Queens" "Brighton" \
-    "Philly2" "Manalapan" "Paramus" "Ocean" "Neptune" "Florida(Oakwood)" "Exit"
+    "Philly2" "Manalapan" "Paramus" "Ocean" "Neptune" "Florida(Oakwood)" "test(lab)" "Exit"
 do
     case $REPLY in
         1) pricecheckersrv="10.0.1.5"; break ;;
@@ -44,7 +44,8 @@ do
         11) pricecheckersrv="10.0.12.5"; break ;;
         12) pricecheckersrv="10.0.14.5"; break ;;
         13) pricecheckersrv="10.0.15.5"; break ;;
-        14) echo "Exiting..."; exit 0 ;;
+        14) pricecheckersrv="10.253.33.5"; break ;;
+        15) echo "Exiting..."; exit 0 ;;
         *) echo "Invalid option"; continue ;;
     esac
 done
